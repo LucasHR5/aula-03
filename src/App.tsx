@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from "./components/Header/Header.tsx";
-import { PlusCircle } from "phosphor-react";
+import { ClipboardText, PlusCircle } from "phosphor-react";
 import styles from "./app.module.css";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Task from "./components/Task/Task.tsx";
+<<<<<<< HEAD
 import { v4 as uuid } from "uuid";
 
 // const data = [
@@ -24,6 +26,28 @@ import { v4 as uuid } from "uuid";
 export default function App() {
   const [newTask, setNewTask] = useState("");
   const [tasks, setTasks] = useState([] as any[]);
+=======
+import { v4 as uuidv4 } from "uuid";
+
+// const data = [
+//   {
+//     // id: uuidv4(),
+//     title: "Tarefa 1",
+//     isDeleted: false,
+//     isCompleted: false,
+//   },
+//   {
+//     // id: uuidv4(),
+//     title: "Tarefa 2",
+//     isDeleted: false,
+//     isCompleted: false,
+//   },
+// ];
+
+export default function App() {
+  const [newTask, setNewTask] = useState("");
+  const [tasks, setTasks] = useState([] as any[]); // hook do react
+>>>>>>> cb6c50023c0f85da16757e44c9146320a85e0722
 
   const handleNewTaskChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -36,7 +60,11 @@ export default function App() {
     setTasks((prev) => [
       ...prev,
       {
+<<<<<<< HEAD
         id: uuid(),
+=======
+        id: uuidv4(),
+>>>>>>> cb6c50023c0f85da16757e44c9146320a85e0722
         title: newTask,
         isCompleted: false,
         isDeleted: false,
@@ -49,6 +77,9 @@ export default function App() {
   // Função para remover uma tarefa
 
   // Lógica para calcular total de tarefas conclídas
+  let count = 0;
+  // tasks.map((item) => item.isCompleted ? ++count : ""); // ternario com se e senão
+  tasks.map((item) => item.isCompleted && ++count);
 
   let count = 0;
   tasks.map((item) => item.isCompleted ? ++ count: "");
@@ -79,6 +110,7 @@ export default function App() {
 
               <div>
                 <strong>Concluídas</strong>
+<<<<<<< HEAD
                 <span>{count} de 10</span>
               </div>
             </div>
@@ -93,6 +125,24 @@ export default function App() {
               {tasks.map((task) => (
                 <Task title={task.title} />
               ))}
+=======
+                <span>
+                  {count} de {tasks.length}
+                </span>
+              </div>
+            </div>
+            <div className={styles.contentBox}>
+              {/* Se não tiver task montrar um icone de lista vazia */}
+              {tasks.length > 0 ? (
+                tasks.map((item) => <Task key={item.id} title={item.title} />)
+              ) : (
+                <>
+                  <ClipboardText size={56} />
+                  <strong>Você ainda não tem tarefas cadastradas</strong>
+                  <small>Crie tarefas e organize seus itens a fazer</small>
+                </>
+              )}
+>>>>>>> cb6c50023c0f85da16757e44c9146320a85e0722
             </div>
           </div>
         </div>
