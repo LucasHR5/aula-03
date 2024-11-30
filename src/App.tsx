@@ -3,25 +3,27 @@ import { PlusCircle } from "phosphor-react";
 import styles from "./app.module.css";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Task from "./components/Task/Task.tsx";
+import { v4 as uuid } from "uuid";
 
-const data = [
-  {
-    // id: uuidv4(),
-    title: "Tarefa 1",
-    isDeleted: false,
-    isCompleted: false,
-  },
-  {
-    // id: uuidv4(),
-    title: "Tarefa 2",
-    isDeleted: false,
-    isCompleted: false,
-  },
-];
+// const data = [
+//   {
+//     // id: uuidv4(),
+//     title: "Tarefa 1",
+//     isDeleted: false,
+//     isCompleted: false,
+//   },
+//   {
+//     // id: uuidv4(),
+//     title: "Tarefa 2",
+//     isDeleted: false,
+//     isCompleted: true,
+//   },
+// ];
+
 
 export default function App() {
   const [newTask, setNewTask] = useState("");
-  const [tasks, setTasks] = useState(data);
+  const [tasks, setTasks] = useState([] as any[]);
 
   const handleNewTaskChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -34,6 +36,7 @@ export default function App() {
     setTasks((prev) => [
       ...prev,
       {
+        id: uuid(),
         title: newTask,
         isCompleted: false,
         isDeleted: false,
@@ -47,6 +50,8 @@ export default function App() {
 
   // Lógica para calcular total de tarefas conclídas
 
+  let count = 0;
+  tasks.map((item) => item.isCompleted ? ++ count: "");
   return (
     <>
       <Header />
@@ -69,15 +74,22 @@ export default function App() {
             <div className={styles.contentHeader}>
               <div>
                 <strong>Tarefas criadas</strong>
-                <span>10</span>
+                <span>{tasks.length}</span>
               </div>
 
               <div>
                 <strong>Concluídas</strong>
-                <span>5 de 10</span>
+                <span>{count} de 10</span>
               </div>
             </div>
             <div className={styles.contentBox}>
+              {/* se não tiver task mostrar um ícone de lista vazia*/}
+
+              {tasks.length > 0 ? (
+                tasks.map((item)=> <Task title = {item.title}/>)
+              ): (
+                <p> Lista Vazia </p>
+              )}
               {tasks.map((task) => (
                 <Task title={task.title} />
               ))}
